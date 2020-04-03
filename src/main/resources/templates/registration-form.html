@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.css}"/>
+    <meta charset="UTF-8">
+    <title>Register new user</title>
+</head>
+<body>
+    <div class="container">
+        <form th:action="@{/register}" th:object="${form}" method="post">
+
+            <label for="userName">Username:</label>
+            <input type="text" id="userName" th:field="*{userName}" class="form-control">
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('userName')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('userName')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <label for="firstName">First name:</label>
+            <input type="text" id="firstName" th:field="*{firstName}" class="form-control">
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('firstName')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('firstName')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <label for="lastName">Last name:</label>
+            <input type="text" id="lastName" th:field="*{lastName}" class="form-control">
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('lastName')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('lastName')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control">
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('password')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('password')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <label for="passwordConfirm">Confirm password:</label>
+            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" class="form-control">
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('passwordConfirm')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('passwordConfirm')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-secondary">Submit</button>
+
+            <div> <!-- sec:authorize="hasAuthority('APP_ADMIN')"  Denna inuti taggen - Kanske inte här utan bara i update-user-form-->
+                <label>Create admin</label>
+                <input type="checkbox" value="true"> <!--th:field="*{admin}"   Denna inuti taggen-->
+            </div>
+        </form>
+    </div>
+    <!--
+    If admin show a checkbox to give the user ADMIN ROLE
+
+    <div class="container">
+        <form th:action="@{/users/register/process}" th:object="${form}" method="post">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" id="email" th:field="*{email}"/>
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('email')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('email')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" class="form-control" th:field="*{}"/>
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('firstName')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" class="form-control" th:field="*{}"/>
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('lastName')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" th:field="*{password}"/>
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('password')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('password')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+            <label for="passwordConfirm">Validate password</label>
+            <input type="password" id="passwordConfirm" class="form-control" th:field="*{passwordConfirm}"/>
+            <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('passwordConfirm')}">
+                <ul>
+                    <li th:each="err : ${#fields.errors('passwordConfirm')}">
+                        <span th:text="${err}"></span>
+                    </li>
+                </ul>
+            </div>
+
+
+
+            <div class="btn-group mb-3">
+                <button class="btn btn-secondary">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+        </form>
+    </div>
+    -->
+
+</body>
+</html>
