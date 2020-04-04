@@ -33,7 +33,7 @@ public class AppUserController {
     @PostMapping("/register")
     public String processRegistration(@Valid @ModelAttribute(name = "form") AppUserFormDto userFormDto, BindingResult bindingResult){
         if(appUserService.findByUserName(userFormDto.getUserName()).isPresent()){
-            FieldError userNameError = new FieldError("form", "userName", "Username " + userFormDto.getUserName() + " already exists!");
+            FieldError userNameError = new FieldError("form", "userName", "Username " + userFormDto.getUserName().toLowerCase() + " already exists!");
             bindingResult.addError(userNameError);
         }
         if (!userFormDto.getPassword().equals(userFormDto.getPasswordConfirm())){

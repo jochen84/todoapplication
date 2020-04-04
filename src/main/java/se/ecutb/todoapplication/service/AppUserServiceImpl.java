@@ -33,10 +33,10 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public AppUser registerNew(AppUserFormDto userFormDto) {
-       // AppUserRole userRole = appRoleRepo.findByRole(Role.USER).orElseThrow(()-> new IllegalArgumentException("Couln't find role of " + Role.USER));
+        AppUserRole userRole = appRoleRepo.findByRole(Role.USER).get(); //.orElseThrow(()-> new IllegalArgumentException("Couln't find role of " + Role.USER));
 
-       // Set<AppUserRole> roleSet = new HashSet<>();
-       // roleSet.add(userRole);
+       Set<AppUserRole> roleSet = new HashSet<>();
+       roleSet.add(userRole);
 
         AppUser newUser = new AppUser(
                 userFormDto.getUserName(),
@@ -48,7 +48,7 @@ public class AppUserServiceImpl implements AppUserService {
         );
 
         newUser = appUserRepo.save(newUser);
-       // newUser.setRoleSet(roleSet);
+        newUser.setRoleSet(roleSet);
         return newUser;
     }
 
