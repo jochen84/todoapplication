@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -9,10 +9,37 @@
     <title>List of users</title>
 </head>
 <body>
-<!--
-    Show list of all users (with assigned tasks?)
-    Button with show specific user details
-    Remove user and make assigned tasks unassigned?
-    -->
+    <div class="container">
+        <div th:if="${users.isEmpty()}">
+            <h2>There are no users here....</h2>
+        </div>
+        <div th:if="${!users.isEmpty()}">
+            <table class="table table-bordered">
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Tasks</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.userName}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td>
+                        <select id="tasks" name="tasks"> <!-- Ska kopplas till tasks  -->
+                            <option value="task1">Logintest</option>
+                            <option value="task2">Registertest</option>
+                            <option value="task3">Task 3</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span><a class="btn btn-primary" th:href="@{/users/{id} (id=${user.getUserId()})}">Details</a></span> <!-- Ska bara visas för på DIN användare om inte admin | Länkning ej klar -->
+                        <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej fixat länkningen -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

@@ -59,14 +59,13 @@ public class Seeder {
         TodoItem washTodo = new TodoItem("Tvätta bilen", "Här behövs massvis med instruktioner som berättar hur man går tillväga för att tvätta sin bil!", LocalDate.of(2020,05,01), false, 50);
         TodoItem cleanTodo = new TodoItem("Städa garderoben", "Likadant här, finns inte en karl som kan göra det utan vettiga instruktioner från sin sambo/fru..", LocalDate.of(2020,06,05), false, 100);
         Set<TodoItem> todoSet = new HashSet<>();
-        todoSet.add(washTodo);
+        //todoSet.add(washTodo);
+        //todoSet.add(cleanTodo);
+        cleanTodo = todoItemRepo.save(cleanTodo);
         todoSet.add(cleanTodo);
-
-        newUser.setTodoItems(todoSet);
+        //newUser.setTodoItems(todoSet);
         newUser = appUserRepo.save(newUser);
 
-
-        System.err.println(newUser.getTodoItems().toString());
     }
 
 

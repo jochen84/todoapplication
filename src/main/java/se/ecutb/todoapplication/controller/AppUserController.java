@@ -14,7 +14,7 @@ import se.ecutb.todoapplication.entity.AppUser;
 import se.ecutb.todoapplication.service.AppUserService;
 
 import javax.validation.Valid;
-import java.lang.reflect.Field;
+import java.util.List;
 
 @Controller
 public class AppUserController {
@@ -56,6 +56,14 @@ public class AppUserController {
         AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new); //findBy.get() istället?
         model.addAttribute("user", appUser);
         return "user-view";
+    }
+
+    @GetMapping("users/userlist")
+    public String getUserList(Model model){
+        List<AppUser> userList = appUserService.findAll();
+        model.addAttribute("users", userList);
+        return "user-list";
+
     }
 
     @GetMapping("/login")

@@ -13,6 +13,7 @@ import se.ecutb.todoapplication.entity.Role;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -65,5 +66,10 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public Optional<AppUser> findByUserName(String userName) {
         return appUserRepo.findAppUserByUserName(userName);
+    }
+
+    @Override
+    public List<AppUser> findAll() {
+        return appUserRepo.findAll();
     }
 }

@@ -3,6 +3,7 @@ package se.ecutb.todoapplication.service;
 import se.ecutb.todoapplication.dto.AppUserFormDto;
 import se.ecutb.todoapplication.entity.AppUser;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AppUserService {
@@ -11,4 +12,5 @@ public interface AppUserService {
     AppUser save(AppUser appUser);
     Optional<AppUser> findById(int userId);
     Optional<AppUser> findByUserName(String userName);
+    List<AppUser> findAll();
 }
