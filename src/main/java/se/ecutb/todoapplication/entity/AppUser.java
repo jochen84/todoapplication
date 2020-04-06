@@ -30,7 +30,7 @@ public class AppUser {
     private Set<AppUserRole> roleSet;
 
     @OneToMany(mappedBy = "assignee", orphanRemoval = false, fetch = FetchType.EAGER,
-    cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}
+    cascade = {CascadeType.MERGE, CascadeType.PERSIST}
     )
     private Set<TodoItem> todoItems;
 
