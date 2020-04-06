@@ -7,8 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.ecutb.todoapplication.dto.AppUserFormDto;
+import se.ecutb.todoapplication.entity.AppUser;
 import se.ecutb.todoapplication.service.AppUserService;
 
 import javax.validation.Valid;
@@ -24,13 +26,13 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-    @GetMapping("/register")
+    @GetMapping("/register/form")
     public String getRegistrationForm(Model model){
         model.addAttribute("form", new AppUserFormDto());
         return "registration-form";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register/process")
     public String processRegistration(@Valid @ModelAttribute(name = "form") AppUserFormDto userFormDto, BindingResult bindingResult){
         if(appUserService.findByUserName(userFormDto.getUserName()).isPresent()){
             FieldError userNameError = new FieldError("form", "userName", "Username " + userFormDto.getUserName().toLowerCase() + " already exists!");
@@ -45,7 +47,15 @@ public class AppUserController {
         }
 
         appUserService.registerNew(userFormDto);
-        return "redirect:/login";
+        AppUser newUser = appUserService.findByUserName(userFormDto.getUserName()).get();
+        return "redirect:/users/"+newUser.getUserId();
+    }
+
+    @GetMapping("users/{id}")
+    public String getUserView(@PathVariable(name = "id")int id, Model model){
+        AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new); //findBy.get() istället?
+        model.addAttribute("user", appUser);
+        return "user-view";
     }
 
     @GetMapping("/login")

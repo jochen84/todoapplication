@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <head>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -9,12 +9,59 @@
     <title>User details</title>
 </head>
 <body>
-<!--
-    Show user details
-    Show list of assigned tasks (button for specific task details?)
-    Checkbox for done / not done
+    <div class="container">
+        <h1>Logged in as: <span th:text="${user.userName}"></span></h1>
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Registration date</th>
+                <th scope="col">Balance</th>
+                <th scope="col">Roles</th>
+                <th scope="col">Actions</th>
+            </tr>
 
-    If admin, UPDATE / REMOVE / MAKE ADMIN
--->
+            <tr>
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.regDate}"></td>
+                <td th:text="${user.balance}"></td>
+                <td>
+                    <span th:each="role : ${user.roleSet}">
+                    <span th:text="'*' +${role.role} + '*'"></span>
+                    </span>
+                </td>
+                <td>
+                    <span><a class="btn btn-primary" th:href="@{/login}">Update</a></span> <!-- Ej färdiglänkad  -->
+                    <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej färdiglänkad  -->
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <p th:text="${user.todoItems}"></p>
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col">Task</th>
+                <th scope="col">Task description</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">Value</th>
+                <th scope="col">***</th>
+            </tr>
+            <tr th:each="task : ${user.todoItems}">
+                <td th:text="${task.title}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.deadline}"></td>
+                <td th:text="${task.reward}"></td>
+                <td>
+                    <span><a class="btn btn-primary" th:href="@{/login}">Details</a></span> <!-- Ej färdiglänkad  -->
+                    <span><input type="checkbox" id="isDone" name="isDone" value="isDone">Done</span> <!-- Funkar ej ännu  -->
+                </td>
+
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
