@@ -11,7 +11,6 @@ import se.ecutb.todoapplication.entity.AppUser;
 import se.ecutb.todoapplication.entity.AppUserRole;
 import se.ecutb.todoapplication.entity.Role;
 import se.ecutb.todoapplication.entity.TodoItem;
-import se.ecutb.todoapplication.service.TodoItemService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -27,7 +26,6 @@ public class Seeder {
     private AppUserRoleRepo appUserRoleRepo;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private TodoItemRepo todoItemRepo;
-    // private TodoItemService todoItemService; //Service vi ska använda? Inte repo?
 
     @Autowired
     public Seeder(AppUserRepo appUserRepo, AppUserRoleRepo appUserRoleRepo, BCryptPasswordEncoder bCryptPasswordEncoder, TodoItemRepo todoItemRepo) {
@@ -60,11 +58,23 @@ public class Seeder {
         //Skapa Todos för att lägga till användaren
         TodoItem washTodo = new TodoItem("Tvätta bilen", "Här behövs massvis med instruktioner som berättar hur man går tillväga för att tvätta sin bil!", LocalDate.of(2020,05,01), false, 50);
         TodoItem cleanTodo = new TodoItem("Städa garderoben", "Likadant här, finns inte en karl som kan göra det utan vettiga instruktioner från sin sambo/fru..", LocalDate.of(2020,06,05), false, 100);
+        Set<TodoItem> todoSet = new HashSet<>();
+        
+        // Detta funkar. save måste komma först.
+        todoItemRepo.save(cleanTodo);
+        todoItemRepo.save(washTodo);
+        todoSet.add(washTodo);
+        todoSet.add(cleanTodo);
 
-        newUser.addUsersTodo(cleanTodo);
-        newUser.addUsersTodo(washTodo);
+        // Får inte denna att koppla till användare... Kan vara ett cascade-problem.
 
-        newUser = appUserRepo.save(newUser);
+        appUserRepo.save(newUser);
+        cleanTodo.setAssignee(newUser);
+        washTodo.setAssignee(newUser);
+
+
+
+
 
     }
 
