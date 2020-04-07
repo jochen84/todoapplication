@@ -66,6 +66,7 @@ public class Seeder {
 
         newUser = appUserRepo.save(newUser);
 
+        //Behåll denna - denna text ska så i mastern ---
     }
 
 
