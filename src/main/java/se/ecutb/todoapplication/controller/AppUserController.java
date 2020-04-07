@@ -48,7 +48,8 @@ public class AppUserController {
 
         appUserService.registerNew(userFormDto);
         AppUser newUser = appUserService.findByUserName(userFormDto.getUserName()).get();
-        return "redirect:/users/"+newUser.getUserId();
+        return "redirect:/login";                               //Denna skall användas när det är klart, kommer till Login sidan när man skapat en ny användare!
+        //return "redirect:/users/"+newUser.getUserId();        //Använder denna när jag testar utan Login o Security
     }
 
     @GetMapping("users/{id}")

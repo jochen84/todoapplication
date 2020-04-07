@@ -25,7 +25,7 @@
                 <tr th:each="todo : ${todolist}">
                     <td th:text="${todo.title}"></td>
                     <td th:text="${todo.description}"></td>
-                    <td th:text="${todo.assignee.userName}"></td>
+                    <td th:text="${todo?.assignee?.userName}"></td>
                     <td th:text="${todo.reward}"></td>
                     <td>
                         <span><a class="btn btn-primary" th:href="@{/todos/{id} (id=${todo.getTodoItemId()})}">Details</a></span> <!-- Ska bara visas för på DIN användare om inte admin | Länkning ej klar -->
