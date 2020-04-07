@@ -10,7 +10,20 @@ html,body{
     height: 100%;
     font-family: 'Numans', sans-serif;
 }
+nav {
+    background-color: rgba(0,0,0,0.6) !important;
+}
+form button {
+    color: var(--main-style-color) !important;
+}
 
+.nav a {
+    color: var(--main-style-color) !important;
+    font-weight: bold;
+}
+.nav a:hover {
+    color: white;
+}
 .card-body{
     padding-bottom: 2.25rem !important;
     flex: none !important;

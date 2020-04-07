@@ -1,10 +1,10 @@
 package se.ecutb.todoapplication.dto;
 
 import se.ecutb.todoapplication.constants.messages.ValidationMessages;
+import se.ecutb.todoapplication.constants.regex.RegexPatterns;
 import se.ecutb.todoapplication.entity.AppUser;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class TodoItemFormDto {
@@ -17,11 +17,8 @@ public class TodoItemFormDto {
     @Size(min = 5, max = 255, message = ValidationMessages.TASK_DESCRIPTION_MESSAGE)
     private String description;
 
-    @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
     private LocalDate deadline;
 
-    @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
-    @Size(min = 5, max = 10000, message = ValidationMessages.TASK_REWARD_MESSAGE)
     private double reward;
 
     private AppUser assignee;

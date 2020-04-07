@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
@@ -9,12 +9,28 @@
     <title>Task details</title>
 </head>
 <body>
-<!--
-    Show task details
-    Checkbox done /not done
-    Assigned user
-
-    If admin, REMOVE / UPDATE / ASSIGN?
--->
+    <div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Assigned user</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">Value</th>
+                <th scope="col">Actions</th>
+            </tr>
+            <tr>
+                <td th:text="${todo.title}"></td>
+                <td th:text="${todo.description}"></td>
+                <td th:text="${todo?.assignee?.userName}"></td>  <!-- Måste fixa så att denna kan vara null! -->
+                <td th:text="${todo.deadline}"></td>
+                <td th:text="${todo.reward}"></td>
+                <td>
+                    <span><a class="btn btn-primary" th:href="@{/login}">Update</a></span> <!-- Ej färdiglänkad  -->
+                    <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej färdiglänkad  -->
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

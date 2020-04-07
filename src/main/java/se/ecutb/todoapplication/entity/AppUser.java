@@ -2,6 +2,7 @@ package se.ecutb.todoapplication.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class AppUser {
     @OneToMany(mappedBy = "assignee", orphanRemoval = false, fetch = FetchType.EAGER,
     cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}
     )
-    private Set<TodoItem> todoItems;
+    private Set<TodoItem> todoItems = new HashSet<>();
 
     public AppUser(String userName, String firstName, String lastName, LocalDate regDate, String password,
                    double balance, Set<AppUserRole> roleSet, Set<TodoItem> todoItems) {
@@ -131,6 +132,26 @@ public class AppUser {
         this.todoItems = todoItems;
     }
 
+    public boolean addUsersTodo(TodoItem todoItem){
+        if (todoItem == null) return false;
+        if(todoItems.contains(todoItem)) return false;
+        if(todoItems.add(todoItem)){
+            todoItem.setAssignee(this);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeUsersTodo(TodoItem todoItem){
+        if (todoItem == null) return false;
+        if (!todoItems.contains(todoItem)) return false;
+        if (todoItems.remove(todoItem)){
+            todoItem.setAssignee(null);
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -158,7 +179,6 @@ public class AppUser {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", regDate=" + regDate +
-                ", password='" + password + '\'' +
                 ", balance=" + balance +
                 '}';
     }

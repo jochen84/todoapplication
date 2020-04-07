@@ -8,6 +8,7 @@ import se.ecutb.todoapplication.dto.TodoItemFormDto;
 import se.ecutb.todoapplication.entity.AppUser;
 import se.ecutb.todoapplication.entity.TodoItem;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,9 +30,9 @@ public class TodoItemServiceImpl implements TodoItemService {
                 itemFormDto.getTitle(),
                 itemFormDto.getDescription(),
                 itemFormDto.getDeadline(),
-                itemFormDto.isDone(),
+                false,
                 itemFormDto.getReward(),
-                itemFormDto.getAssignee()
+                null
         );
 
         newItem = todoItemRepo.save(newItem);
@@ -52,4 +53,16 @@ public class TodoItemServiceImpl implements TodoItemService {
     public Optional<TodoItem> findByAssignee(AppUser appUser) {
         return todoItemRepo.findByAssignee(appUser);
     }
+
+    @Override
+    public Optional<TodoItem> findByTitle(String todoTitle) {
+        return todoItemRepo.findByTitle(todoTitle);
+    }
+
+    @Override
+    public List<TodoItem> findAll() {
+        return todoItemRepo.findAll();
+    }
+
+
 }

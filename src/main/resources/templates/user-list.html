@@ -28,7 +28,7 @@
                     <td th:text="${user.lastName}"></td>
                     <td>
                         <select name="task" id="task"> <!-- Bara test, ska kopplas till tasks, inte visa roller! -->
-                            <option th:each="role : ${user.roleSet}" th:value="${role.role}" th:text="${role.role}"></option>
+                            <option th:each="todo : ${user.todoItems}" th:value="${todo.title}" th:text="${todo.title}"></option>
                         </select>
                     </td>
                     <td>
