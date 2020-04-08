@@ -15,10 +15,10 @@
 
     <ul class="nav">
         <li class="nav-item">
-            <a class="navbar-brand text-danger" href="#">LOGO</a>
+            <h3 sec:authorize="isAuthenticated()">Logged in as <span th:text="'| '${#authentication.name} + ' |'"></span></h3></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-danger" th:href="@{/register}">Register</a>
+            <a class="nav-link text-danger" th:href="@{/register/form}">Register</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-danger" href="http://www.aftonbladet.se">Aftonbladet</a>

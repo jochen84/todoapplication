@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Logged in as: <span th:text="${user.userName}"></span></h1>
+        <h1>Logged in as: <span th:text="${#authentication.name}"></span></h1> <!-- Funkar inte såhär, visar användaren man tittar på, inte den "man är" -->
         <table class="table table-bordered">
             <tr>
                 <th scope="col">Username</th>

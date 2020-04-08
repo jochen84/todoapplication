@@ -14,7 +14,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/users/**").hasAnyAuthority("ADMIN","USER")
-                .antMatchers("/todos/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/todos/todolist").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/todos/create").hasAuthority("ADMIN")
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
@@ -22,6 +23,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login") //Post metod som VI inte har skapat (Spring Security gissar jag?)
                 .usernameParameter("username")
                 .passwordParameter("password")
+                .defaultSuccessUrl("/users/userlist")
                 //.failureForwardUrl("/login?error")  //Se felhantering rad 20 i login-form.html
                 .permitAll()
                 .and()

@@ -59,6 +59,8 @@ public class AppUserController {
         return "user-view";
     }
 
+
+
     @GetMapping("users/userlist")
     public String getUserList(Model model){
         List<AppUser> userList = appUserService.findAll();
