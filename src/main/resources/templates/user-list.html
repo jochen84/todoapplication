@@ -32,8 +32,8 @@
                         </select>
                     </td>
                     <td>
-                        <span><a class="btn btn-primary" th:href="@{/users/{id} (id=${user.getUserId()})}">Details</a></span> <!-- Ska bara visas för på DIN användare om inte admin | Länkning ej klar -->
-                        <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej fixat länkningen -->
+                        <span th:if="${#authentication.name.equalsIgnoreCase(user.userName)} or ${#authorization.expression('hasAuthority(''ADMIN'')')}"><a class="btn btn-primary" th:href="@{/users/{id} (id=${user.getUserId()})}">Details</a></span> <!-- Ska bara visas för på DIN användare OCH admin -->
+                        <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej fixat länkningen | Visas bara för admins -->
                     </td>
                 </tr>
             </table>
