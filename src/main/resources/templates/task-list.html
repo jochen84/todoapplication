@@ -21,23 +21,25 @@
         <div th:if="${todolist.isEmpty()}">
             <h2>There are no task here yet....</h2>
         </div>
-        <div class="row col-md-6 col-md-offset-2 custyle" th:if="${!todolist.isEmpty()}">
-            <table class="row col-md-6 col-md-offset-2 custyle">
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Assigned user</th>
-                    <th scope="col">Value</th>
-                    <th scope="col">Actions</th>
-                </tr>
+        <div class="row col-md-12 col-md-offset-2 custyle" th:if="${!todolist.isEmpty()}">
+            <table class="table table-striped custab">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Assigned user</th>
+                        <th>Value</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
                 <tr th:each="todo : ${todolist}">
                     <td th:text="${todo.title}"></td>
                     <td th:text="${todo.description}"></td>
                     <td th:text="${todo?.assignee?.userName}"></td>
                     <td th:text="${todo.reward}"></td>
-                    <td>
-                        <span><a class="btn btn-primary" th:href="@{/todos/{id} (id=${todo.getTodoItemId()})}">Details</a></span> <!-- Ska bara visas för på DIN användare om inte admin | Länkning ej klar -->
-                        <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej fixat länkningen -->
+                    <td class="text-center">
+                        <a class='btn btn-info btn-xs' th:href="@{/todos/{id} (id=${todo.getTodoItemId()})}">Details</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger btn-xs" th:href="@{/login}">Delete</a> <!-- Länkas till TODO-DELETE -->
                     </td>
                 </tr>
             </table>
