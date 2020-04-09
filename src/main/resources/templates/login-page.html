@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
      <title>Login Page</title>
 
@@ -10,8 +10,8 @@
     <link rel="stylesheet" th:href="@{css/style.css}" href="../static/style.css">
 </head>
 <body>
-<nav th:replace="navbar :: navigation"></nav>
-    <div class="container">
+<nav th:replace="navbartest :: navet"></nav>
+    <div sec:authorize="isAnonymous()" class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
@@ -56,6 +56,31 @@
                     <div class="d-flex justify-content-center">
                         <a class="main-color" href="#">Forgot your password?</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Lite testkod för att inte visa logga in när du redan är inloggad -->
+    <div sec:authorize="isAuthenticated()" class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h3> Already logged in</h3>
+                    <div class="d-flex justify-content-end social_icon">
+                        <span><i class="fab fa-facebook-square"></i></span>
+                        <span><i class="fab fa-twitter-square"></i></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                </div>
+                <div class="card-footer">
                 </div>
             </div>
         </div>
