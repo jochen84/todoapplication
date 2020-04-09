@@ -1,0 +1,28 @@
+När jag kör igång appen går jag till: http://localhost:8080/login - login som finns är admin/admin eller user/user
+
+Skittråkigt men så länge det inte finns riktiga länkar får man orientera sig enligt ned länkar! 
+-------------------------------------------------------------------------
+http://localhost:8080/register/form - skapa ny användare, funkar att logga in med den
+
+http://localhost:8080/users/userlist - Lista över alla användare, admin ska se Details o Delete, user - bara sin Details
+
+http://localhost:8080/todos/create - skapa todos, ska bara va admin som kommer åt
+
+http://localhost:8080/todos/todolist - alla använda ska kunna komma åt (ej gäster)
+------------------------------------------------------------------------
+Vid inloggning kommer man direkt till /users/userlist
+Finns ännu inga knappar för orientering- Börjat med det och ska lägga in navbar i alla html-filer
+Ännu finns bara Register i navbar (bara för guests och admins)
+
+Vi behöver en *UpdateAppUserForm* i dto paketet. Skapad!
+Ett html formulär för uppdate innehållandes: Förnamn och efternamn - och om du är admin även en knapp för "Make admin"
+
+Vi behöver en *UpdateTodoForm* i dto paketet. Skapad. (Men behövs den? Använda TodoFormDto även för update?)
+Ett html formulär för uppdate innehållandes det vi vill den ska innehålla. Skapat, men mer arbete krävs.
+
+I AppUserController behöver vi metoder för update och delete
+I TodoController behöver vi metoder för update och delete. Update påbörjat.
+
+Behöver kunna lägga till Todos på en användare
+
+******************************************************************

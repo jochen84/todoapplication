@@ -1,13 +1,14 @@
 package se.ecutb.todoapplication.dto;
 
 import se.ecutb.todoapplication.constants.messages.ValidationMessages;
-import se.ecutb.todoapplication.constants.regex.RegexPatterns;
 import se.ecutb.todoapplication.entity.AppUser;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
-public class TodoItemFormDto {
+public class UpdateTodoItemFormDto {
 
     @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
     @Size(min = 2, max = 255, message = ValidationMessages.TASK_TITLE_MESSAGE)
@@ -25,8 +26,6 @@ public class TodoItemFormDto {
     private AppUser assignee;
 
     boolean isDone;
-
-
 
     public String getTitle() {
         return title;
@@ -75,5 +74,4 @@ public class TodoItemFormDto {
     public void setDone(boolean done) {
         isDone = done;
     }
-
 }

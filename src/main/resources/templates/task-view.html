@@ -26,7 +26,7 @@
                 <td th:text="${todo.deadline}"></td>
                 <td th:text="${todo.reward}"></td>
                 <td>
-                    <span><a class="btn btn-primary" th:href="@{/login}">Update</a></span> <!-- Ej färdiglänkad  -->
+                    <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/todos/{id}/update (id=${todo.getTodoItemId()})}">Update</a></span> <!--Färdiglänkad  -->
                     <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej färdiglänkad  -->
                 </td>
             </tr>
