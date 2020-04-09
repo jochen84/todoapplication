@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>navet</title>
+</head>
+<body>
+<nav th:fragment="navet" class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">|TODO-app|</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/login}">
+
+                    Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')} or ${#authorization.expression('isAnonymous()')}" class="nav-item active">
+                <a class="nav-link" th:href="@{/register/form}">
+
+                    Register
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/users/userlist}">
+
+                    Userlist
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/todos/todolist}">
+
+                    Todolist
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" class="nav-item active">
+                <a class="nav-link" th:href="@{/todos/create}">
+
+                    Create todo
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+        </ul>
+        <h4 sec:authorize="isAuthenticated()">Logged in as: <span th:text="'| ' + ${#authentication.name} + ' |- '"></span></h4>
+        <form th:action="@{/logout}" class="form-inline" method="post">
+            <div sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-secondary" type="submit" value="Logout">Logout</button>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <a class="btn btn-outline-secondary" th:href="@{/login}" value="Login">Login</a>
+            </div>
+        </form>
+    </div>
+</nav>
+</body>
+</html>
+
+                    <!--********** SPARA DENNA FÖR EN DROPDOWNLIST **********-->
+<!--
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-envelope-o">
+            <span class="badge badge-primary">11</span>
+        </i>
+        Dropdown
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" th:href="@{/todos/todolist}">Todolist</a>
+        <a class="dropdown-item" th:href="@{/login}">Login</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+</li>
+ -->
