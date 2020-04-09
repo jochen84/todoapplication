@@ -132,6 +132,13 @@ public class AppUser {
         this.todoItems = todoItems;
     }
 
+    //Skapa metod för addRole
+    public boolean makeAdmin(){
+        return false;
+        //En metod för att lägga till rollen ADMIN i roleset. Ska ju inte "skicka in" en ny roll som i "addUserTodo". Sätta private Set<AppUserRole> roleSet = new HashSet som på todoitems? Eller hur göra?
+    }
+    //Skapa metod för removeRole
+
     public boolean addUsersTodo(TodoItem todoItem){
         if (todoItem == null) return false;
         if(todoItems.contains(todoItem)) return false;

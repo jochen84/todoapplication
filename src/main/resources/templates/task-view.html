@@ -18,27 +18,32 @@
 <nav th:replace="navbartest :: navet"></nav>
 <br>
     <div class="container">
-        <table class="table table-bordered">
+        <div class="row col-md-12 col-md-offset-2 custyle">
+        <table class="table table-striped custab">
             <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Assigned user</th>
-                <th scope="col">Deadline</th>
-                <th scope="col">Value</th>
-                <th scope="col">Actions</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Assigned user</th>
+                <th>Deadline</th>
+                <th>Done</th>
+                <th>Value</th>
+                <th>Actions</th>
             </tr>
             <tr>
                 <td th:text="${todo.title}"></td>
                 <td th:text="${todo.description}"></td>
-                <td th:text="${todo?.assignee?.userName}"></td>  <!-- Måste fixa så att denna kan vara null! -->
+                <td th:text="${todo?.assignee?.userName}"></td>
                 <td th:text="${todo.deadline}"></td>
+                <th th:if="${todo.done}">Finished</th>
+                <th th:if="${!todo.done}">Not finished</th>
                 <td th:text="${todo.reward}"></td>
-                <td>
-                    <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/todos/{id}/update (id=${todo.getTodoItemId()})}">Update</a></span> <!--Färdiglänkad  -->
-                    <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej färdiglänkad  -->
+                <td class="text-center">
+                    <a sec:authorize="hasAuthority('ADMIN')" class='btn btn-info btn-xs' th:href="@{/todos/{id}/update (id=${todo.getTodoItemId()})}">Update</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger btn-xs" th:href="@{/login}">Delete</a> <!-- Ej färdiglänkad  -->
                 </td>
             </tr>
         </table>
+        </div>
     </div>
 </body>
 </html>

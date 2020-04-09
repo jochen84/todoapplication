@@ -18,18 +18,19 @@
 <nav th:replace="navbartest :: navet"></nav>
 <br>
     <div class="container">
-        <h1>Logged in as: <span th:text="${#authentication.name}"></span></h1> <!-- Funkar inte såhär, visar användaren man tittar på, inte den "man är" -->
-        <table class="table table-bordered">
-            <tr>
-                <th scope="col">Username</th>
-                <th scope="col">First name</th>
-                <th scope="col">Last name</th>
-                <th scope="col">Registration date</th>
-                <th scope="col">Balance</th>
-                <th scope="col">Roles</th>
-                <th scope="col">Actions</th>
-            </tr>
-
+        <div class="row col-md-12 col-md-offset-2 custyle">
+        <table class="table table-striped custab">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Registration date</th>
+                    <th>Balance</th>
+                    <th>Roles</th>
+                    <th >Actions</th>
+                </tr>
+            </thead>
             <tr>
                 <td th:text="${user.userName}"></td>
                 <td th:text="${user.firstName}"></td>
@@ -42,21 +43,21 @@
                     </span>
                 </td>
                 <td>
-                    <span><a class="btn btn-primary" th:href="@{/login}">Update</a></span> <!-- Ej färdiglänkad  -->
-                    <span sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/login}">Delete</a></span> <!-- Ej färdiglänkad  -->
+                    <a class='btn btn-info btn-xs' href="#" onclick="alert('Function not implemented')">Update</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger btn-xs" th:href="@{/login}">Delete</a> <!-- Ej färdiglänkad  -->
                 </td>
             </tr>
         </table>
 
         <br>
 
-        <table class="table table-bordered">
+        <table class="table table-striped custab">
             <tr>
-                <th scope="col">Task</th>
-                <th scope="col">Task description</th>
-                <th scope="col">Deadline</th>
-                <th scope="col">Value</th>
-                <th scope="col">***</th>
+                <th>Task</th>
+                <th>Task description</th>
+                <th>Deadline</th>
+                <th>Value</th>
+                <th>***</th>
             </tr>
             <tr th:each="task : ${user.todoItems}">
                 <td th:text="${task.title}"></td>
@@ -64,12 +65,13 @@
                 <td th:text="${task.deadline}"></td>
                 <td th:text="${task.reward}"></td>
                 <td>
-                    <span><a class="btn btn-primary" th:href="@{/login}">Details</a></span> <!-- Ej färdiglänkad  -->
-                    <span><input type="checkbox" id="isDone" name="isDone" value="isDone">Done</span> <!-- Funkar ej ännu  -->
+                    <a class='btn btn-info btn-xs' th:href="@{/todos/{id} (id=${task.getTodoItemId()})}">Details</a> <!-- Ej färdiglänkad - ska länka till task-view  -->
+                    <input type="checkbox" id="isDone" name="isDone" value="isDone">Done <!-- Funkar ej ännu  -->
                 </td>
 
             </tr>
         </table>
+    </div>
     </div>
 </body>
 </html>
