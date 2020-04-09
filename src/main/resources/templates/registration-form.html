@@ -24,8 +24,6 @@
     <div class="row">
         <form th:action="@{/register/process}" th:object="${form}" method="post" class="col-md-9 go-right">
             <h2>Register a new user</h2>
-            <p>To see how it works, you clink in a input field.</p>
-
             <div class="form-group">
                 <label for="userName">Username:</label>
                 <input type="text" id="userName" th:field="*{userName}" class="form-control">
@@ -84,9 +82,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="form-group"> <!-- sec:authorize="hasAuthority('APP_ADMIN')"  Denna inuti taggen - Kanske inte här utan bara i update-user-form -->
-                <label>Give this user administrator rights</label>
-                <input type="checkbox" value="true"> <!-- th:field="*{admin}"   Denna inuti taggen -->
+            <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" class="form-group">
+                <label for="makeAdmin">Give this user administrator rights: </label>
+                <input type="checkbox" id="makeAdmin" value="true"> <!-- th:field="*{admin}"   Denna inuti taggen -->
             </div>
             <button class="btn btn-secondary">Submit</button>
 

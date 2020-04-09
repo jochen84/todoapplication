@@ -21,8 +21,8 @@
         <div th:if="${todolist.isEmpty()}">
             <h2>There are no task here yet....</h2>
         </div>
-        <div th:if="${!todolist.isEmpty()}">
-            <table class="table table-bordered">
+        <div class="row col-md-6 col-md-offset-2 custyle" th:if="${!todolist.isEmpty()}">
+            <table class="row col-md-6 col-md-offset-2 custyle">
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>

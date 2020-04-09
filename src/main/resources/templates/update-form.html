@@ -20,8 +20,10 @@
 <div class="container">
     <form th:action="@{/todos/{id}/update/process}" th:object="${form}" method="post">
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" th:field="*{title}" class="form-control">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control">
+        </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('title')}">
             <ul>
                 <li th:each="err : ${#fields.errors('title')}">
@@ -29,9 +31,11 @@
                 </li>
             </ul>
         </div>
-
-        <label for="description">Description:</label>
-        <input type="text" id="description" th:field="*{description}" class="form-control">
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <!-- Textarea instead of input, problems with string in Java? -->
+            <textarea type="text" id="description" th:field="*{description}" class="form-control"></textarea>
+        </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('description')}">
             <ul>
                 <li th:each="err : ${#fields.errors('description')}">
@@ -39,9 +43,10 @@
                 </li>
             </ul>
         </div>
-
-        <label for="deadline">Deadline:</label>
-        <input type="text" id="deadline" th:field="*{deadline}" placeholder="xxxx-xx-xx" class="form-control">
+        <div class="form-group">
+            <label for="deadline">Deadline:</label>
+            <input type="text" id="deadline" th:field="*{deadline}" placeholder="xxxx-xx-xx" class="form-control">
+        </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('deadline')}">
             <ul>
                 <li th:each="err : ${#fields.errors('deadline')}">
@@ -49,9 +54,10 @@
                 </li>
             </ul>
         </div>
-
-        <label for="reward">Reward:</label>
-        <input type="number" step="0.1" id="reward" th:field="*{reward}" class="form-control">
+        <div class="form-group">
+            <label for="reward">Reward:</label>
+            <input type="number" step="0.1" id="reward" th:field="*{reward}" class="form-control">
+        </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('reward')}">
             <ul>
                 <li th:each="err : ${#fields.errors('reward')}">
@@ -60,9 +66,10 @@
             </ul>
         </div>
 
-
-        <label for="assignee">Assignee:</label>
-        <input type="text" id="assignee" th:field="*{assignee.userName}" class="form-control">
+        <div class="form-group">
+            <label for="assignee">Assignee:</label>
+            <input type="text" id="assignee" th:field="*{assignee.userName}" class="form-control">
+        </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('assignee')}">
             <ul>
                 <li th:each="err : ${#fields.errors('assignee')}">
