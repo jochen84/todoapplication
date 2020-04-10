@@ -28,7 +28,7 @@ public class AppUser {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "app_user_role_id")
     )
-    private Set<AppUserRole> roleSet;
+    private Set<AppUserRole> roleSet = new HashSet<>();
 
     @OneToMany(mappedBy = "assignee", orphanRemoval = false, fetch = FetchType.EAGER,
     cascade = {CascadeType.MERGE, CascadeType.PERSIST}
@@ -133,11 +133,16 @@ public class AppUser {
     }
 
     //Skapa metod för addRole
-    public boolean makeAdmin(){
-        return false;
-        //En metod för att lägga till rollen ADMIN i roleset. Ska ju inte "skicka in" en ny roll som i "addUserTodo". Sätta private Set<AppUserRole> roleSet = new HashSet som på todoitems? Eller hur göra?
+    public boolean makeAdmin(AppUserRole admin){
+        if (admin == null) return false;
+        return roleSet.add(admin);
     }
     //Skapa metod för removeRole
+    public boolean removeAdmin(AppUserRole admin){
+        if (admin == null) return false;
+        if (!roleSet.contains(admin)) return false;
+        return roleSet.remove(admin);
+    }
 
     public boolean addUsersTodo(TodoItem todoItem){
         if (todoItem == null) return false;

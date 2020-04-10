@@ -82,10 +82,12 @@
                     </li>
                 </ul>
             </div>
+
             <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}" class="form-group">
-                <label for="makeAdmin">Give this user administrator rights: </label>
-                <input type="checkbox" id="makeAdmin" value="true"> <!-- th:field="*{admin}"   Denna inuti taggen -->
+                <label for="admin">Give this user administrator rights: </label>
+                <input type="checkbox" id="admin" name="admin" th:value="true" th:field="*{admin}">
             </div>
+
             <button class="btn btn-secondary">Submit</button>
 
         </form>

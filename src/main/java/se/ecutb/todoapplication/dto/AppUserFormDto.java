@@ -28,6 +28,16 @@ public class AppUserFormDto {
     @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
     private String passwordConfirm;
 
+    boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
     public String getUserName() {
         return userName;
     }

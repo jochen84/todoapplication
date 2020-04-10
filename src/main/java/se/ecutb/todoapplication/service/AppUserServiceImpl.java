@@ -35,9 +35,12 @@ public class AppUserServiceImpl implements AppUserService {
     @Transactional(rollbackFor = RuntimeException.class)
     public AppUser registerNew(AppUserFormDto userFormDto) {
         AppUserRole userRole = appRoleRepo.findByRole(Role.USER).get(); //.orElseThrow(()-> new IllegalArgumentException("Couln't find role of " + Role.USER));
-
+        AppUserRole adminRole = appRoleRepo.findByRole(Role.ADMIN).get();
        Set<AppUserRole> roleSet = new HashSet<>();
        roleSet.add(userRole);
+       if (userFormDto.isAdmin()){
+           roleSet.add(adminRole);
+       }
 
         AppUser newUser = new AppUser(
                 userFormDto.getUserName(),
