@@ -29,7 +29,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .logout()
                 .invalidateHttpSession(true)
-                //.deleteCookies("JSESSIONID")
+                .deleteCookies("JSESSIONID")
                 .logoutUrl("/logout") //Post metod som VI inte har definerat (Spring Security gissar jag?)
                 .logoutSuccessUrl("/login?logout")
             .and()

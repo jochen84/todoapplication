@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import se.ecutb.todoapplication.data.AppUserRoleRepo;
 import se.ecutb.todoapplication.dto.AppUserFormDto;
+import se.ecutb.todoapplication.dto.UpdateAppUserFormDto;
 import se.ecutb.todoapplication.entity.AppUser;
+import se.ecutb.todoapplication.entity.AppUserRole;
+import se.ecutb.todoapplication.entity.Role;
 import se.ecutb.todoapplication.service.AppUserService;
 
 import javax.validation.Valid;
@@ -22,10 +26,12 @@ import java.util.List;
 public class AppUserController {
 
     private AppUserService appUserService;
+    private AppUserRoleRepo appUserRoleRepo;
 
     @Autowired
-    public AppUserController(AppUserService appUserService) {
+    public AppUserController(AppUserService appUserService, AppUserRoleRepo appUserRoleRepo) {
         this.appUserService = appUserService;
+        this.appUserRoleRepo = appUserRoleRepo;
     }
 
     @GetMapping("/register/form")
@@ -66,6 +72,40 @@ public class AppUserController {
         }
     }
 
+    @GetMapping("users/{id}/update")
+    public String getUserUpdateForm(@PathVariable("id")int id, Model model){
+        UpdateAppUserFormDto appUserFormDto = new UpdateAppUserFormDto();
+        AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
+        AppUserRole admin = appUserRoleRepo.findByRole(Role.ADMIN).orElseThrow(IllegalArgumentException::new);
+        appUserFormDto.setFirstName(appUser.getFirstName());
+        appUserFormDto.setLastName(appUser.getLastName());
+        appUserFormDto.setUserId(appUser.getUserId());
+        appUserFormDto.setAdmin(appUser.getRoleSet().contains(admin));
+        model.addAttribute("form", appUserFormDto);
+
+        return "update-appuser";
+    }
+
+    @PostMapping("users/{id}/update/process")
+    public String processUpdate(@PathVariable("id")int id, UpdateAppUserFormDto form, BindingResult bindingResult){
+        AppUser original = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
+        AppUserRole admin = appUserRoleRepo.findByRole(Role.ADMIN).orElseThrow(IllegalArgumentException::new);
+        if (bindingResult.hasErrors()){
+            return "update-form";
+        }
+        original.setFirstName(form.getFirstName());
+        original.setLastName(form.getLastName());
+        if (form.isAdmin()){
+            original.makeAdmin(admin);
+        }
+        if (!form.isAdmin()){
+            original.removeAdmin(admin);
+        }
+        appUserService.save(original);
+
+        return "redirect:/users/" + original.getUserId();
+    }
+
 
 
     @GetMapping("users/userlist")
@@ -75,11 +115,13 @@ public class AppUserController {
         return "user-list";
 
     }
-
+/*
     @PostMapping("users/{id}/adminprocess")
     public String makeAdmin(){
         return "redirect:/user-view";
     }
+
+ */
 
     @GetMapping("/login")
     public String getLoginForm(){

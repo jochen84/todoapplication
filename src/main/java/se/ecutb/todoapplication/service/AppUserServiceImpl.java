@@ -38,6 +38,7 @@ public class AppUserServiceImpl implements AppUserService {
         AppUserRole adminRole = appRoleRepo.findByRole(Role.ADMIN).get();
        Set<AppUserRole> roleSet = new HashSet<>();
        roleSet.add(userRole);
+       //If Admin checkbox is checked on first creation it runs this
        if (userFormDto.isAdmin()){
            roleSet.add(adminRole);
        }

@@ -19,6 +19,7 @@
 <br>
 <div class="container">
     <form th:action="@{/todos/{id}/update/process (id=${form.getTodoItemId()})}" th:object="${form}" method="post">
+        <h2>Update the task</h2>
         <input type="hidden" th:value="${form.todoItemId}" th:field="*{todoItemId}">
         <div class="form-group">
             <label for="title">Title:</label>
@@ -92,7 +93,7 @@
         </div>
 
         <label for="isDone"></label>
-        <span><input type="checkbox" id="isDone" name="isDone" th:value="true" th:field="*{done}">Task is done</span>
+        <span><input type="checkbox" id="isDone" name="isDone" th:value="true" th:field="*{done}"> task is done</span>
         <br>
         <br>
 
