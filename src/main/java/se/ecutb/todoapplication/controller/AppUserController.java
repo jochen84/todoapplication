@@ -76,6 +76,11 @@ public class AppUserController {
 
     }
 
+    @PostMapping("users/{id}/adminprocess")
+    public String makeAdmin(){
+        return "redirect:/user-view";
+    }
+
     @GetMapping("/login")
     public String getLoginForm(){
         return "login-page";
