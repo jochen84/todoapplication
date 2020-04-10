@@ -67,8 +67,10 @@
         </div>
 
         <div class="form-group">
-            <label for="assignee">Assignee:</label>
-            <input type="text" id="assignee" th:field="*{assignee.userName}" class="form-control">
+            <label for="user">Assignee:</label>
+            <select name="user" id="user">
+                <option hidden disabled selected value th:each="user : ${users}" th:value="${user.userId}" th:text="${user.userName}"> -- select a user -- </option>
+            </select>
         </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('assignee')}">
             <ul>
@@ -78,9 +80,9 @@
             </ul>
         </div>
 
+        <label for="isDone"></label>
+        <span><input type="checkbox" id="isDone" name="isDone" th:field="*{done}">Task is done</span> <!-- Funkar ej ännu  -->
         <br>
-        <label for="isDone">Is done:</label>
-        <span><input type="checkbox" id="isDone" name="isDone" value="isDone">Done</span> <!-- Funkar ej ännu  -->
         <br>
 
         <button class="btn btn-secondary">Submit</button>
