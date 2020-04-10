@@ -18,8 +18,8 @@
 <nav th:replace="navbartest :: navet"></nav>
 <br>
 <div class="container">
-    <form th:action="@{/todos/{id}/update/process}" th:object="${form}" method="post">
-
+    <form th:action="@{/todos/{id}/update/process (id=${form.getTodoItemId()})}" th:object="${form}" method="post">
+        <input type="hidden" th:value="${form.todoItemId}" th:field="*{todoItemId}">
         <div class="form-group">
             <label for="title">Title:</label>
             <input type="text" id="title" th:field="*{title}" class="form-control">
@@ -65,13 +65,23 @@
                 </li>
             </ul>
         </div>
-
         <div class="form-group">
-            <label for="user">Assignee:</label>
-            <select name="user" id="user">
-                <!-- denna funkar inte. -->
-                <option hidden disabled selected value th:each="user : ${users}" th:value="${user.userId}" th:text="${user.userName}"> -- select a user -- </option>
-            </select>
+            <label for="assignee">
+                Assignee: <span class="font-weight-bold" th:text="${form.assignee.userName}"></span>
+                <span>| Available users: </span>
+                <span th:each="user : ${users}" th:text="' '+ ${user.userName} + ' Id: ' + ${user.userId} + ' |'"></span>
+                <!--
+                <a th:text="${form.assignee.userName}" class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div th:each="user : ${users}" >
+                        <a th:value="${user.userId}" th:text="${user.userName}" class="dropdown-item" href="#"></a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+                -->
+            </label>
+            <input type="text" id="assignee" th:field="*{assignee}" class="form-control">
+            <span>Enter ID of the new user you wish to set</span>
         </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('assignee')}">
             <ul>
@@ -82,7 +92,7 @@
         </div>
 
         <label for="isDone"></label>
-        <span><input type="checkbox" id="isDone" name="isDone" th:field="*{done}">Task is done</span> <!-- Funkar ej ännu ?  -->
+        <span><input type="checkbox" id="isDone" name="isDone" th:value="true" th:field="*{done}">Task is done</span>
         <br>
         <br>
 

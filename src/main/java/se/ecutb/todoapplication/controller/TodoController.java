@@ -63,6 +63,7 @@ public class TodoController {
         todoItemForm.setReward(todoItem.getReward());
         todoItemForm.setAssignee(todoItem.getAssignee());
         todoItemForm.setDone(todoItem.isDone());
+        todoItemForm.setTodoItemId(todoItem.getTodoItemId());
         model.addAttribute("form", todoItemForm);
 
         return "update-form";

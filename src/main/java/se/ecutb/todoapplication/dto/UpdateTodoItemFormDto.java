@@ -5,10 +5,14 @@ import se.ecutb.todoapplication.entity.AppUser;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class UpdateTodoItemFormDto {
+
+    @Positive
+    private int todoItemId;
 
     @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
     @Size(min = 2, max = 255, message = ValidationMessages.TASK_TITLE_MESSAGE)
@@ -26,6 +30,14 @@ public class UpdateTodoItemFormDto {
     private AppUser assignee;
 
     boolean isDone;
+
+    public int getTodoItemId() {
+        return todoItemId;
+    }
+
+    public void setTodoItemId(int todoItemId) {
+        this.todoItemId = todoItemId;
+    }
 
     public String getTitle() {
         return title;

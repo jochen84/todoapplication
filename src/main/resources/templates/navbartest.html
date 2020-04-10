@@ -57,7 +57,7 @@
             </li>
 
         </ul>
-        <h4 sec:authorize="isAuthenticated()">Logged in as: <span th:text="'| ' + ${#authentication.name} + ' |- '"></span></h4>
+        <h6 class="text-light" sec:authorize="isAuthenticated()">Logged in as: <span class="lead" th:text="' -| ' + ${#authentication.name} + ' |- &emsp;'"></span></h6>
         <form th:action="@{/logout}" class="form-inline" method="post">
             <div sec:authorize="isAuthenticated()">
                 <button class="btn btn-outline-light" type="submit" value="Logout">Logout</button>
