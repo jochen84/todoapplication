@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import se.ecutb.todoapplication.dto.TodoItemFormDto;
 import se.ecutb.todoapplication.dto.UpdateTodoItemFormDto;
+import se.ecutb.todoapplication.entity.AppUser;
 import se.ecutb.todoapplication.entity.TodoItem;
+import se.ecutb.todoapplication.service.AppUserService;
 import se.ecutb.todoapplication.service.TodoItemService;
 
 
@@ -22,10 +24,12 @@ import java.util.List;
 public class TodoController {
 
     TodoItemService todoItemService;
+    AppUserService appUserService;
 
     @Autowired
-    public TodoController(TodoItemService todoItemService) {
+    public TodoController(TodoItemService todoItemService, AppUserService appUserService) {
         this.todoItemService = todoItemService;
+        this.appUserService = appUserService;
     }
 
     @GetMapping("todos/create")
@@ -49,6 +53,8 @@ public class TodoController {
 
     @GetMapping("todos/{id}/update")
     public String getUpdateForm(@PathVariable("id") int id, Model model){
+        List<AppUser> users =  appUserService.findAll();
+        model.addAttribute("users", users);
         UpdateTodoItemFormDto todoItemForm = new UpdateTodoItemFormDto();
         TodoItem todoItem = todoItemService.findById(id).orElseThrow(IllegalArgumentException::new);
         todoItemForm.setTitle(todoItem.getTitle());
