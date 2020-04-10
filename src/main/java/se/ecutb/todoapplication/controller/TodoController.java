@@ -1,6 +1,8 @@
 package se.ecutb.todoapplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,21 +54,26 @@ public class TodoController {
     }
 
     @GetMapping("todos/{id}/update")
-    public String getUpdateForm(@PathVariable("id") int id, Model model){
-        List<AppUser> users =  appUserService.findAll();
-        model.addAttribute("users", users);
-        UpdateTodoItemFormDto todoItemForm = new UpdateTodoItemFormDto();
-        TodoItem todoItem = todoItemService.findById(id).orElseThrow(IllegalArgumentException::new);
-        todoItemForm.setTitle(todoItem.getTitle());
-        todoItemForm.setDescription(todoItem.getDescription());
-        todoItemForm.setDeadline(todoItem.getDeadline());
-        todoItemForm.setReward(todoItem.getReward());
-        todoItemForm.setAssignee(todoItem.getAssignee());
-        todoItemForm.setDone(todoItem.isDone());
-        todoItemForm.setTodoItemId(todoItem.getTodoItemId());
-        model.addAttribute("form", todoItemForm);
+    public String getUpdateForm(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails caller, Model model){
+        if (caller == null) return "redirect:/accessdenied";
+        if (caller.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))) {
+            List<AppUser> users = appUserService.findAll();
+            model.addAttribute("users", users);
+            UpdateTodoItemFormDto todoItemForm = new UpdateTodoItemFormDto();
+            TodoItem todoItem = todoItemService.findById(id).orElseThrow(IllegalArgumentException::new);
+            todoItemForm.setTitle(todoItem.getTitle());
+            todoItemForm.setDescription(todoItem.getDescription());
+            todoItemForm.setDeadline(todoItem.getDeadline());
+            todoItemForm.setReward(todoItem.getReward());
+            todoItemForm.setAssignee(todoItem.getAssignee());
+            todoItemForm.setDone(todoItem.isDone());
+            todoItemForm.setTodoItemId(todoItem.getTodoItemId());
+            model.addAttribute("form", todoItemForm);
 
-        return "update-form";
+            return "update-form";
+        }else{
+            return "redirect:/accessdenied";
+        }
     }
 
     @PostMapping("todos/{id}/update/process")

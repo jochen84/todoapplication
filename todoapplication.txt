@@ -26,3 +26,5 @@ I TodoController behöver vi metoder för update och delete. Update påbörjat.
 Behöver kunna lägga till Todos på en användare
 
 ******************************************************************
+Funkar att lägga till och ta bort admin status
+Uppdatera användarens för och efternamn (om admin sätta/ta bort admin)
