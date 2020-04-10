@@ -32,7 +32,7 @@ public class TodoItemServiceImpl implements TodoItemService {
                 itemFormDto.getDeadline(),
                 false,
                 itemFormDto.getReward(),
-                null
+                itemFormDto.getAssignee()
         );
 
         newItem = todoItemRepo.save(newItem);

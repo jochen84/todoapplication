@@ -91,7 +91,7 @@ public class AppUserController {
         AppUser original = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
         AppUserRole admin = appUserRoleRepo.findByRole(Role.ADMIN).orElseThrow(IllegalArgumentException::new);
         if (bindingResult.hasErrors()){
-            return "update-form";
+            return "update-task";
         }
         original.setFirstName(form.getFirstName());
         original.setLastName(form.getLastName());

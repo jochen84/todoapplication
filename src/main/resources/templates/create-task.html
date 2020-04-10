@@ -67,6 +67,26 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="form-group">
+                <label for="assignee">
+                    Assignee: <span class="font-weight-bold" th:text="${form?.assignee?.userName}"></span>
+                    <span>| Available users: </span>
+                    <span th:each="user : ${users}" th:text="' '+ ${user.userName} + ' Id: ' + ${user.userId} + ' |'"></span>
+                    <!--
+                    <a th:text="${form.assignee.userName}" class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div th:each="user : ${users}" >
+                            <a th:value="${user.userId}" th:text="${user.userName}" class="dropdown-item" href="#"></a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </div>
+                    -->
+                </label>
+                <input type="text" id="assignee" th:field="*{assignee}" class="form-control">
+                <span>Enter ID of the user you wish to assign</span>
+            </div>
+
             <button class="btn btn-secondary">Submit</button>
         </form>
     </div>

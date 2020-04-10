@@ -36,6 +36,8 @@ public class TodoController {
 
     @GetMapping("todos/create")
     public String createNewTask(Model model){
+        List<AppUser> users = appUserService.findAll();
+        model.addAttribute("users", users);
         model.addAttribute("form", new TodoItemFormDto());
         return "create-task";
     }
@@ -70,7 +72,7 @@ public class TodoController {
             todoItemForm.setTodoItemId(todoItem.getTodoItemId());
             model.addAttribute("form", todoItemForm);
 
-            return "update-form";
+            return "update-task";
         }else{
             return "redirect:/accessdenied";
         }
@@ -89,7 +91,7 @@ public class TodoController {
             bindingResult.addError(error);
         }
         if (bindingResult.hasErrors()){
-            return "update-form";
+            return "update-task";
         }
 
         original.setTitle(form.getTitle());
