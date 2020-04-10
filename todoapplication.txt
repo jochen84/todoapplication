@@ -26,5 +26,13 @@ I TodoController behöver vi metoder för update och delete. Update påbörjat.
 Behöver kunna lägga till Todos på en användare
 
 ******************************************************************
+                  --------10/4 16:00------
 Funkar att lägga till och ta bort admin status
 Uppdatera användarens för och efternamn (om admin sätta/ta bort admin)
+Admin kan uppdatera tasks/sätta att de klara och tilldela dem (Detta kan bara göras via todo-update)
+Redan i todolistan skall ska man kunna tilldela users
+Ska användaren kunna sätta "task-done"?
+Går ej deleta användare och tasks.
+Värdet av tasken har ingen koppling till userns konto
+Lite länkningar här o där som inte är fixade ännu tror jag.
+*************************************************************
