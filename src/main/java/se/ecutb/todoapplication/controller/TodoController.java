@@ -85,6 +85,7 @@ public class TodoController {
             BindingResult bindingResult
     ){
         TodoItem original = todoItemService.findById(id).orElseThrow(IllegalArgumentException::new);
+        AppUser appUser = appUserService.findById(form.getAssignee().getUserId()).orElseThrow(IllegalArgumentException::new);
 
         if (todoItemService.findByTitle(form.getTitle()).isPresent() && !form.getTitle().equals(original.getTitle())){
             FieldError error = new FieldError("form", "title", "Title is already in use");
@@ -100,6 +101,12 @@ public class TodoController {
         original.setReward(form.getReward());
         original.setAssignee(form.getAssignee());
         original.setDone(form.isDone());
+
+        if (form.isDone()) {
+            appUser.setBalance(appUser.getBalance() + form.getReward());
+        }
+
+        appUserService.save(appUser);
 
         todoItemService.save(original);
 
