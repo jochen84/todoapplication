@@ -11,4 +11,9 @@ public class IndexController {
         return "login-page";
     }
 
+    @GetMapping("/accessdenied")
+    public String getAccessDenied(){
+        return "access-denied";
+    }
+
 }

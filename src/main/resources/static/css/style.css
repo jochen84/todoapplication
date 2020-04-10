@@ -12,6 +12,7 @@ html,body{
 }
 nav {
     background-color: rgba(0,0,0,0.6) !important;
+    font-family: 'Numans', sans-serif !important;
 }
 form button {
     color: var(--main-style-color) !important;
@@ -50,7 +51,7 @@ form button {
 .social_icon span{
     font-size: 60px;
     margin-left: 10px;
-    color: var(--main-style-color);
+    color: whitesmoke;
 }
 
 .social_icon span:hover{
@@ -70,7 +71,7 @@ form button {
 
 .input-group-prepend span{
     width: 50px;
-    background-color: var(--main-style-color);
+    background-color: whitesmoke);
     color: black;
     border:0 !important;
 }

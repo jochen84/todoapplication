@@ -1,6 +1,8 @@
 package se.ecutb.todoapplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,15 +50,20 @@ public class AppUserController {
 
         appUserService.registerNew(userFormDto);
         AppUser newUser = appUserService.findByUserName(userFormDto.getUserName()).get();
-        return "redirect:/login";                               //Denna skall användas när det är klart, kommer till Login sidan när man skapat en ny användare!
-        //return "redirect:/users/"+newUser.getUserId();        //Använder denna när jag testar utan Login o Security
+        return "redirect:/login";
     }
 
     @GetMapping("users/{id}")
-    public String getUserView(@PathVariable(name = "id")int id, Model model){
-        AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new); //findBy.get() istället?
-        model.addAttribute("user", appUser);
-        return "user-view";
+    public String getUserView(@PathVariable(name = "id")int id, @AuthenticationPrincipal UserDetails caller, Model model) {
+        AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
+        if (caller == null) return "redirect:/accessdenied";
+        if (appUser.getUserName().equals(caller.getUsername()) || caller.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))) {
+            model.addAttribute("user", appUser);
+            return "user-view";
+        }else{
+
+            return "redirect:/accessdenied";
+        }
     }
 
 

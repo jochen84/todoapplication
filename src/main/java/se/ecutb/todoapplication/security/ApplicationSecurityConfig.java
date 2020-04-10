@@ -17,7 +17,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/todos/todolist").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/todos/create").hasAuthority("ADMIN")
                 .antMatchers("/**").permitAll()
-                .and()
+            .and()
                 .formLogin()
                 .loginPage("/login") //Get this
                 .loginProcessingUrl("/login") //Post metod som VI inte har skapat (Spring Security gissar jag?)
@@ -26,12 +26,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/users/userlist")
                 //.failureForwardUrl("/login?error")  //Se felhantering rad 20 i login-form.html
                 .permitAll()
-                .and()
+            .and()
                 .logout()
                 .invalidateHttpSession(true)
                 //.deleteCookies("JSESSIONID")
                 .logoutUrl("/logout") //Post metod som VI inte har definerat (Spring Security gissar jag?)
-                .logoutSuccessUrl("/login?logout");
-
+                .logoutSuccessUrl("/login?logout")
+            .and()
+                .exceptionHandling()
+                .accessDeniedPage("/accessdenied");
     }
 }
