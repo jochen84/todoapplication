@@ -69,6 +69,7 @@
         <div class="form-group">
             <label for="user">Assignee:</label>
             <select name="user" id="user">
+                <!-- denna funkar inte. -->
                 <option hidden disabled selected value th:each="user : ${users}" th:value="${user.userId}" th:text="${user.userName}"> -- select a user -- </option>
             </select>
         </div>
@@ -81,7 +82,7 @@
         </div>
 
         <label for="isDone"></label>
-        <span><input type="checkbox" id="isDone" name="isDone" th:field="*{done}">Task is done</span> <!-- Funkar ej ännu  -->
+        <span><input type="checkbox" id="isDone" name="isDone" th:field="*{done}">Task is done</span> <!-- Funkar ej ännu ?  -->
         <br>
         <br>
 
