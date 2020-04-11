@@ -13,4 +13,5 @@ public interface AppUserService {
     Optional<AppUser> findById(int userId);
     Optional<AppUser> findByUserName(String userName);
     List<AppUser> findAll();
+    AppUser delete(AppUser appUser);
 }

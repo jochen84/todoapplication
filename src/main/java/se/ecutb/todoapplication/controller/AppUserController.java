@@ -72,6 +72,15 @@ public class AppUserController {
         }
     }
 
+    @GetMapping("users/{id}/delete")
+    public String deleteUser(@PathVariable("id")int id){
+        AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
+        appUserService.delete(appUser);
+
+        return "user-list";
+    }
+
+
     @GetMapping("users/{id}/update")
     public String getUserUpdateForm(@PathVariable("id")int id, Model model){
         UpdateAppUserFormDto appUserFormDto = new UpdateAppUserFormDto();

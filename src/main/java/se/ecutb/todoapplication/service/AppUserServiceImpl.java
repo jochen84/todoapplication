@@ -76,4 +76,12 @@ public class AppUserServiceImpl implements AppUserService {
     public List<AppUser> findAll() {
         return appUserRepo.findAll();
     }
+
+    @Override
+    public AppUser delete(AppUser appUser) {
+        appUserRepo.delete(appUser);
+        return appUser;
+    }
+
+
 }
