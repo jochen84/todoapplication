@@ -36,3 +36,11 @@ Går ej deleta användare och tasks.
 Värdet av tasken har ingen koppling till userns konto
 Lite länkningar här o där som inte är fixade ännu tror jag.
 *************************************************************
+
+*******
+----- 11/4 sådär runt 03 -----
+Todos kan nu direkt assignas när de skapas
+När en task sätts till finished under update task, då får usern sin betalning.
+Samtidigt försvinner möjligheten att sätta tasken till not done.
+Påbörjat delete-funktion i user-list. Funkar inte. Än.
+*******
