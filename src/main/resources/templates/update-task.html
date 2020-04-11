@@ -93,7 +93,8 @@
         </div>
 
         <label for="isDone"></label>
-        <span><input type="checkbox" id="isDone" name="isDone" th:value="true" th:field="*{done}"> task is done</span>
+
+        <span th:if="*{!done}"><input type="checkbox" id="isDone" name="isDone" th:value="true" th:field="*{done}"> task is done</span>
         <br>
         <br>
 

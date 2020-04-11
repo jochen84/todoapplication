@@ -102,14 +102,15 @@ public class TodoController {
         original.setAssignee(form.getAssignee());
         original.setDone(form.isDone());
 
+        // Pay the user if task is done.
         if (form.isDone()) {
             appUser.setBalance(appUser.getBalance() + form.getReward());
         }
 
         appUserService.save(appUser);
-
         todoItemService.save(original);
 
+        /*
         System.err.println(id);
         System.err.println(form.getTitle());
         System.err.println(form.getDescription());
@@ -117,6 +118,8 @@ public class TodoController {
         System.err.println(form.getReward());
         System.err.println(form.getAssignee());
         System.err.println(form.isDone());
+
+         */
 
         return "redirect:/todos/" + original.getTodoItemId();
     }
