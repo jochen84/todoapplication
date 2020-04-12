@@ -27,7 +27,7 @@ public class Seeder {
     private AppUserRoleRepo appUserRoleRepo;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private TodoItemRepo todoItemRepo;
-    // private TodoItemService todoItemService; //Service vi ska använda? Inte repo?
+
 
     @Autowired
     public Seeder(AppUserRepo appUserRepo, AppUserRoleRepo appUserRoleRepo, BCryptPasswordEncoder bCryptPasswordEncoder, TodoItemRepo todoItemRepo) {
@@ -40,16 +40,17 @@ public class Seeder {
     @PostConstruct
     @Transactional
     public void init(){
-        //Lägger till de 2 roller som finns o lägger i en lista för att sedan lägga på Admin användaren
+        // Add roles to database, and a set
         Set<AppUserRole> userRoles = Arrays.stream(Role.values())
                 .map(userRole -> appUserRoleRepo.save(new AppUserRole(userRole)))
                 .collect(Collectors.toSet());
-        //Skapar en user, lägger till roleset med admin och user - sparar till databasen
+
+        // Create user, give admin rights, save to database
         AppUser appUser = new AppUser("admin", "Olle", "Bolle", LocalDate.now(), bCryptPasswordEncoder.encode("admin"), 0);
         appUser.setRoleSet(userRoles);
         appUserRepo.save(appUser);
 
-        //Skapar en user, lägger till roleset med bara user - sparar till databasen
+        // Create user, give user rights, save to database
         AppUser newUser = new AppUser("user", "User", "User", LocalDate.now(), bCryptPasswordEncoder.encode("user"), 0);
         AppUserRole userRole = appUserRoleRepo.findByRole(Role.USER).get();
         Set<AppUserRole> roleSet = new HashSet<>();
@@ -57,7 +58,7 @@ public class Seeder {
         newUser.setRoleSet(roleSet);
 
 
-        //Skapa Todos för att lägga till användaren
+        // Create todos, save to database
         TodoItem washTodo = new TodoItem("Tvätta bilen", "Här behövs massvis med instruktioner som berättar hur man går tillväga för att tvätta sin bil!", LocalDate.of(2020,05,01), false, 50);
         TodoItem cleanTodo = new TodoItem("Städa garderoben", "Likadant här, finns inte en karl som kan göra det utan vettiga instruktioner från sin sambo/fru..", LocalDate.of(2020,06,05), false, 100);
         TodoItem blahTodo = new TodoItem("Blaha blabla", "Likadant här, bla blra bla blra blblblblblba..", LocalDate.of(2021,06,05), false, 100);

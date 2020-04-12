@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 
 public class AppUserFormDto {
 
+    // Form for creating user
+
     @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
     @Pattern(regexp = RegexPatterns.USERNAME_PATTERN, message = ValidationMessages.USERNAME_FORMAT_MESSAGE)
     private String userName;

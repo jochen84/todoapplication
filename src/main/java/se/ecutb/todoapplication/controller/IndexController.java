@@ -15,5 +15,4 @@ public class IndexController {
     public String getAccessDenied(){
         return "access-denied";
     }
-
 }

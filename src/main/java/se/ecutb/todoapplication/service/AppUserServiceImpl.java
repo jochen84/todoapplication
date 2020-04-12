@@ -31,14 +31,16 @@ public class AppUserServiceImpl implements AppUserService {
         this.appRoleRepo = appRoleRepo;
     }
 
+    // Register new user
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public AppUser registerNew(AppUserFormDto userFormDto) {
-        AppUserRole userRole = appRoleRepo.findByRole(Role.USER).get(); //.orElseThrow(()-> new IllegalArgumentException("Couln't find role of " + Role.USER));
+        AppUserRole userRole = appRoleRepo.findByRole(Role.USER).get();
         AppUserRole adminRole = appRoleRepo.findByRole(Role.ADMIN).get();
        Set<AppUserRole> roleSet = new HashSet<>();
        roleSet.add(userRole);
-       //If Admin checkbox is checked on first creation it runs this
+
+       //If Admin checkbox is checked, give user admin role
        if (userFormDto.isAdmin()){
            roleSet.add(adminRole);
        }

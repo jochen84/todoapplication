@@ -10,8 +10,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //http.authorizeRequests().antMatchers("/users/**").permitAll();
-
         http.authorizeRequests()
                 .antMatchers("/users/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/todos/todolist").hasAnyAuthority("ADMIN", "USER")
@@ -19,18 +17,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
             .and()
                 .formLogin()
-                .loginPage("/login") //Get this
-                .loginProcessingUrl("/login") //Post metod som VI inte har skapat (Spring Security gissar jag?)
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/users/userlist")
-                //.failureForwardUrl("/login?error")  //Se felhantering rad 20 i login-form.html
                 .permitAll()
             .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .logoutUrl("/logout") //Post metod som VI inte har definerat (Spring Security gissar jag?)
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
             .and()
                 .exceptionHandling()

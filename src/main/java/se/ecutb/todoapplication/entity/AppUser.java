@@ -132,12 +132,11 @@ public class AppUser {
         this.todoItems = todoItems;
     }
 
-    //Skapa metod för addRole
     public boolean makeAdmin(AppUserRole admin){
         if (admin == null) return false;
         return roleSet.add(admin);
     }
-    //Skapa metod för removeRole
+
     public boolean removeAdmin(AppUserRole admin){
         if (admin == null) return false;
         if (!roleSet.contains(admin)) return false;

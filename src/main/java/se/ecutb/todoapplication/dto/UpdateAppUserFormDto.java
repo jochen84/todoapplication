@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 public class UpdateAppUserFormDto {
 
+    // Form for updating user
+
     @Positive
     private int userId;
 

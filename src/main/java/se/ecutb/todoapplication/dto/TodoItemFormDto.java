@@ -9,6 +9,9 @@ import java.time.LocalDate;
 
 public class TodoItemFormDto {
 
+    // Form for creating todo
+    // Validation for 'deadline' is not 100%.
+
     @NotBlank(message = ValidationMessages.FIELD_REQUIRED_MESSAGE)
     @Size(min = 2, max = 255, message = ValidationMessages.TASK_TITLE_MESSAGE)
     private String title;
@@ -25,8 +28,6 @@ public class TodoItemFormDto {
     private AppUser assignee;
 
     boolean isDone;
-
-
 
     public String getTitle() {
         return title;
@@ -75,5 +76,4 @@ public class TodoItemFormDto {
     public void setDone(boolean done) {
         isDone = done;
     }
-
 }

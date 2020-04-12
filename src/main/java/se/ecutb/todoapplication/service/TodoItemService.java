@@ -15,6 +15,4 @@ public interface TodoItemService {
     List<TodoItem> findByAssignee(AppUser appUser);
     Optional<TodoItem> findByTitle(String todoTitle);
     List<TodoItem> findAll();
-
-
 }

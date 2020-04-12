@@ -10,8 +10,5 @@ public interface AppUserRoleRepo extends JpaRepository<AppUserRole, Integer> {
 
     @Override
     Optional<AppUserRole> findById(Integer integer);
-
-
-    //Det var | Optional<AppUserRole> findByRole(AppUserRole appUserRole);| Ändrade till Role userRole
     Optional<AppUserRole> findByRole(Role userRole);
 }

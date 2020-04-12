@@ -34,6 +34,8 @@ public class TodoController {
         this.appUserService = appUserService;
     }
 
+    // Create todo
+    // Adds list of users to model, for eventual assignment
     @GetMapping("todos/create")
     public String createNewTask(Model model){
         List<AppUser> users = appUserService.findAll();
@@ -42,6 +44,9 @@ public class TodoController {
         return "create-task";
     }
 
+    // Create todo, process
+    // Check if todo with same title exists
+    // Save to database
     @PostMapping("todos/create/process")
     public String processNewTask(@Valid @ModelAttribute(name = "form") TodoItemFormDto itemFormDto, BindingResult bindingResult){
         if (todoItemService.findByTitle(itemFormDto.getTitle()).isPresent()){
@@ -55,6 +60,9 @@ public class TodoController {
         return "redirect:/todos/"+newTodo.getTodoItemId();
     }
 
+    // Update todo
+    // Requires admin rights
+    // Adds list of users to model, for eventual assignment
     @GetMapping("todos/{id}/update")
     public String getUpdateForm(@PathVariable("id") int id, @AuthenticationPrincipal UserDetails caller, Model model){
         if (caller == null) return "redirect:/accessdenied";
@@ -78,6 +86,10 @@ public class TodoController {
         }
     }
 
+    // Update todo, process
+    // Check if todo title already exists
+    // If set to 'done', reward user
+    // Show updated todo
     @PostMapping("todos/{id}/update/process")
     public String processUpdate(
             @PathVariable("id") int id,
@@ -110,19 +122,10 @@ public class TodoController {
         appUserService.save(appUser);
         todoItemService.save(original);
 
-        /*
-        System.err.println(id);
-        System.err.println(form.getTitle());
-        System.err.println(form.getDescription());
-        System.err.println(form.getDeadline());
-        System.err.println(form.getReward());
-        System.err.println(form.getAssignee());
-        System.err.println(form.isDone());
-         */
-
         return "redirect:/todos/" + original.getTodoItemId();
     }
 
+    // List of todos
     @GetMapping("todos/todolist")
     public String getTodoList(Model model){
         List<TodoItem> todoItems = todoItemService.findAll();
@@ -130,6 +133,7 @@ public class TodoController {
         return "task-list";
     }
 
+    // View specific todo
     @GetMapping("todos/{id}")
     public String getUserView(@PathVariable(name = "id")int id, Model model){
         TodoItem todoItem = todoItemService.findById(id).orElseThrow(IllegalArgumentException::new); //findBy.get() istället?

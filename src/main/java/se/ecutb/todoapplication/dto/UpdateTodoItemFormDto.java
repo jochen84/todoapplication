@@ -11,6 +11,8 @@ import java.time.LocalDate;
 
 public class UpdateTodoItemFormDto {
 
+    // Form for updating todo
+
     @Positive
     private int todoItemId;
 

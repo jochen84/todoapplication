@@ -11,8 +11,6 @@ public interface TodoItemRepo extends JpaRepository<TodoItem, Integer> {
 
     @Override
     Optional<TodoItem> findById(Integer integer);
-
     List<TodoItem> findByAssignee(AppUser appUser);
-
     Optional<TodoItem> findByTitle(String todoTitle);
 }

@@ -35,12 +35,17 @@ public class AppUserController {
         this.todoItemRepo = todoItemRepo;
     }
 
+    // Register new user
     @GetMapping("/register/form")
     public String getRegistrationForm(Model model){
         model.addAttribute("form", new AppUserFormDto());
         return "registration-form";
     }
 
+    // Register new user, process
+    // Check if username exists, check if password equals confirmed password
+    // Save new user to database
+    // Show user-list
     @PostMapping("/register/process")
     public String processRegistration(@Valid @ModelAttribute(name = "form") AppUserFormDto userFormDto, BindingResult bindingResult){
         if(appUserService.findByUserName(userFormDto.getUserName()).isPresent()){
@@ -57,9 +62,11 @@ public class AppUserController {
 
         appUserService.registerNew(userFormDto);
         AppUser newUser = appUserService.findByUserName(userFormDto.getUserName()).get();
-        return "redirect:/login";
+        return "redirect:/users/userlist/";
     }
 
+    // View user details
+    // Admin can view all users. User can only see own details.
     @GetMapping("users/{id}")
     public String getUserView(@PathVariable(name = "id")int id, @AuthenticationPrincipal UserDetails caller, Model model) {
         AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -73,35 +80,28 @@ public class AppUserController {
         }
     }
 
-    /*
-    @GetMapping("users/{id}/delete")
-    public String deleteUser(@PathVariable("id")int id){
-        AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
-        appUserService.delete(appUser);
-
-        return "user-list";
-    }
-
-     */
-
+    // Delete user
+    // Requires admin rights
+    // If there are assigned todos, these will be unassigned
+    // A failure leads to accessdenied, but should be "deletion failed", that doesn't exist at the moment
     @PostMapping("users/delete")
     public String deleteUser(@RequestParam("userId")int userId, @AuthenticationPrincipal UserDetails caller){
         if (caller == null) return "redirect:/accessdenied";
         if (caller.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))){
             AppUser appUser = appUserService.findById(userId).orElseThrow(IllegalArgumentException::new);
-            //Få till så den tömmer todolist
-            //appUser.getTodoItems().stream().forEach(x -> x.setAssignee(null));        //Denna funkar, men hur använda removeUsersTodo
             List<TodoItem> todos = todoItemRepo.findByAssignee(appUser);
-            todos.stream().forEach(x->appUser.removeUsersTodo(x));
+            todos.forEach(appUser::removeUsersTodo);
                 appUserService.delete(appUser);
             return "redirect:/users/userlist";
         }else{
-            return "redirect:/accessdenied"; //Eller return delete failed? :)
+            return "redirect:/accessdenied";
         }
-
     }
 
-
+    // Update user
+    // Requires admin rights
+    // Possible to change firstName and lastName
+    // Possible to give or take administrator rights
     @GetMapping("users/{id}/update")
     public String getUserUpdateForm(@PathVariable("id")int id, Model model){
         UpdateAppUserFormDto appUserFormDto = new UpdateAppUserFormDto();
@@ -116,6 +116,7 @@ public class AppUserController {
         return "update-appuser";
     }
 
+    // Update user, process
     @PostMapping("users/{id}/update/process")
     public String processUpdate(@PathVariable("id")int id, UpdateAppUserFormDto form, BindingResult bindingResult){
         AppUser original = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -136,8 +137,8 @@ public class AppUserController {
         return "redirect:/users/" + original.getUserId();
     }
 
-
-
+    // User list
+    // Show all users
     @GetMapping("users/userlist")
     public String getUserList(Model model){
         List<AppUser> userList = appUserService.findAll();

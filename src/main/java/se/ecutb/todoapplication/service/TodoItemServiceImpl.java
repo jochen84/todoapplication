@@ -21,7 +21,6 @@ public class TodoItemServiceImpl implements TodoItemService {
         this.todoItemRepo = todoItemRepo;
     }
 
-
     @Override
     @Transactional(rollbackFor = RuntimeException.class)
     public TodoItem create(TodoItemFormDto itemFormDto) {
@@ -63,6 +62,4 @@ public class TodoItemServiceImpl implements TodoItemService {
     public List<TodoItem> findAll() {
         return todoItemRepo.findAll();
     }
-
-
 }
