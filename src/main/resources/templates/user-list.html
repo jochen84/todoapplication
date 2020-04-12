@@ -53,7 +53,7 @@
                     <a th:if="${#authentication.name.equalsIgnoreCase(user.userName)} or ${#authorization.expression('hasAuthority(''ADMIN'')')}" class='btn btn-info btn-xs' th:href="@{/users/{id} (id=${user.getUserId()})}">Details</a>
                     <form sec:authorize="hasAuthority('ADMIN')" method="post" th:action="@{/users/delete}">
                         <input type="hidden" name="userId" id="userId" th:value="${user.userId}">
-                        <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                        <button th:onclick="alert('Deleted user (*input username here*)')" type="submit" class="btn btn-danger btn-xs">Delete</button>
                     </form>
                     <!--<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/users/{id}/delete (id=${user.getUserId()})}" class="btn btn-danger btn-xs">Delete</a>  -->
                 </td>

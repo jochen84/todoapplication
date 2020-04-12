@@ -9,11 +9,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import se.ecutb.todoapplication.data.AppUserRoleRepo;
+import se.ecutb.todoapplication.data.TodoItemRepo;
 import se.ecutb.todoapplication.dto.AppUserFormDto;
 import se.ecutb.todoapplication.dto.UpdateAppUserFormDto;
 import se.ecutb.todoapplication.entity.AppUser;
 import se.ecutb.todoapplication.entity.AppUserRole;
 import se.ecutb.todoapplication.entity.Role;
+import se.ecutb.todoapplication.entity.TodoItem;
 import se.ecutb.todoapplication.service.AppUserService;
 
 import javax.validation.Valid;
@@ -24,11 +26,13 @@ public class AppUserController {
 
     private AppUserService appUserService;
     private AppUserRoleRepo appUserRoleRepo;
+    private TodoItemRepo todoItemRepo;
 
     @Autowired
-    public AppUserController(AppUserService appUserService, AppUserRoleRepo appUserRoleRepo) {
+    public AppUserController(AppUserService appUserService, AppUserRoleRepo appUserRoleRepo, TodoItemRepo todoItemRepo) {
         this.appUserService = appUserService;
         this.appUserRoleRepo = appUserRoleRepo;
+        this.todoItemRepo = todoItemRepo;
     }
 
     @GetMapping("/register/form")
@@ -85,7 +89,9 @@ public class AppUserController {
         if (caller == null) return "redirect:/accessdenied";
         if (caller.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))){
             AppUser appUser = appUserService.findById(userId).orElseThrow(IllegalArgumentException::new);
-            appUserService.delete(appUser);
+            //Få till så den tömmer todolist
+                appUser.getTodoItems().stream().forEach(todoItem -> System.err.println(appUser.getTodoItems().toString()));
+                //appUserService.delete(appUser);
             return "redirect:/users/userlist";
         }else{
             return "redirect:/accessdenied"; //Eller return delete failed? :)
