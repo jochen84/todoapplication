@@ -12,7 +12,7 @@ public interface TodoItemService {
     TodoItem create(TodoItemFormDto itemFormDto);
     TodoItem save(TodoItem todoItem);
     Optional<TodoItem> findById(int todoItemId);
-    Optional<TodoItem> findByAssignee(AppUser appUser);
+    List<TodoItem> findByAssignee(AppUser appUser);
     Optional<TodoItem> findByTitle(String todoTitle);
     List<TodoItem> findAll();
 

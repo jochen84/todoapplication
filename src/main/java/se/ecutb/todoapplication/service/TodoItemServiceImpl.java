@@ -50,7 +50,7 @@ public class TodoItemServiceImpl implements TodoItemService {
     }
 
     @Override
-    public Optional<TodoItem> findByAssignee(AppUser appUser) {
+    public List<TodoItem> findByAssignee(AppUser appUser) {
         return todoItemRepo.findByAssignee(appUser);
     }
 

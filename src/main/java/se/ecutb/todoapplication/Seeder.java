@@ -60,9 +60,11 @@ public class Seeder {
         //Skapa Todos för att lägga till användaren
         TodoItem washTodo = new TodoItem("Tvätta bilen", "Här behövs massvis med instruktioner som berättar hur man går tillväga för att tvätta sin bil!", LocalDate.of(2020,05,01), false, 50);
         TodoItem cleanTodo = new TodoItem("Städa garderoben", "Likadant här, finns inte en karl som kan göra det utan vettiga instruktioner från sin sambo/fru..", LocalDate.of(2020,06,05), false, 100);
+        TodoItem blahTodo = new TodoItem("Blaha blabla", "Likadant här, bla blra bla blra blblblblblba..", LocalDate.of(2021,06,05), false, 100);
 
         newUser.addUsersTodo(cleanTodo);
         newUser.addUsersTodo(washTodo);
+        newUser.addUsersTodo(blahTodo);
 
         newUser = appUserRepo.save(newUser);
 

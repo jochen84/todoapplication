@@ -90,8 +90,10 @@ public class AppUserController {
         if (caller.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))){
             AppUser appUser = appUserService.findById(userId).orElseThrow(IllegalArgumentException::new);
             //Få till så den tömmer todolist
-                appUser.getTodoItems().stream().forEach(todoItem -> System.err.println(appUser.getTodoItems().toString()));
-                //appUserService.delete(appUser);
+            //appUser.getTodoItems().stream().forEach(x -> x.setAssignee(null));        //Denna funkar, men hur använda removeUsersTodo
+            List<TodoItem> todos = todoItemRepo.findByAssignee(appUser);
+            todos.stream().forEach(x->appUser.removeUsersTodo(x));
+                appUserService.delete(appUser);
             return "redirect:/users/userlist";
         }else{
             return "redirect:/accessdenied"; //Eller return delete failed? :)
