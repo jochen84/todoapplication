@@ -82,7 +82,7 @@
                 -->
             </label>
             <input type="text" id="assignee" th:field="*{assignee}" class="form-control">
-            <span>Enter ID of the new user you wish to set</span>
+            <span>Enter ID of the new user you wish to set - blank if no assignee</span>
         </div>
         <div class="text-danger font-weight-bold" th:if="${#fields.hasErrors('assignee')}">
             <ul>
@@ -93,7 +93,6 @@
         </div>
 
         <label for="isDone"></label>
-
         <span th:if="*{!done}"><input type="checkbox" id="isDone" name="isDone" th:value="true" th:field="*{done}"> task is done</span>
         <br>
         <br>

@@ -70,7 +70,7 @@
 
             <div class="form-group">
                 <label for="assignee">
-                    Assignee: <span class="font-weight-bold" th:text="${form?.assignee?.userName}"></span>
+                    <span class="font-weight-bold" th:text="${form?.assignee?.userName}"></span>
                     <span>| Available users: </span>
                     <span th:each="user : ${users}" th:text="' '+ ${user.userName} + ' Id: ' + ${user.userId} + ' |'"></span>
                     <!--
@@ -84,7 +84,7 @@
                     -->
                 </label>
                 <input type="text" id="assignee" th:field="*{assignee}" class="form-control">
-                <span>Enter ID of the user you wish to assign</span>
+                <span>Enter ID of the user you wish to assign - Leave blank for no assignee</span>
             </div>
 
             <button class="btn btn-secondary">Submit</button>
