@@ -44,7 +44,10 @@
                 </td>
                 <td>
                     <a class='btn btn-info btn-xs' th:href="@{/users/{id}/update (id=${user.getUserId()})}">Update</a>
-                    <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger btn-xs" th:href="@{/login}">Delete</a> <!-- Ej färdiglänkad  -->
+                    <form sec:authorize="hasAuthority('ADMIN')" method="post" th:action="@{/users/delete}">
+                        <input type="hidden" name="userId" id="userId" th:value="${user.userId}">
+                        <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                    </form>
                 </td>
             </tr>
         </table>

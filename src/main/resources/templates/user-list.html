@@ -51,30 +51,16 @@
                 </td>
                 <td class="text-center">
                     <a th:if="${#authentication.name.equalsIgnoreCase(user.userName)} or ${#authorization.expression('hasAuthority(''ADMIN'')')}" class='btn btn-info btn-xs' th:href="@{/users/{id} (id=${user.getUserId()})}">Details</a>
-                    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/users/{id}/delete (id=${user.getUserId()})}" class="btn btn-danger btn-xs">Delete</a> <!-- Denna skall länkas till USER-DELETE -->
+                    <form sec:authorize="hasAuthority('ADMIN')" method="post" th:action="@{/users/delete}">
+                        <input type="hidden" name="userId" id="userId" th:value="${user.userId}">
+                        <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                    </form>
+                    <!--<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/users/{id}/delete (id=${user.getUserId()})}" class="btn btn-danger btn-xs">Delete</a>  -->
                 </td>
             </tr>
         </table>
     </div>
 </div>
 
-
-<!--********** SPARA DENNA FÖR EN DROPDOWNLIST **********-->
-<!--
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-envelope-o">
-            <span class="badge badge-primary">11</span>
-        </i>
-        Dropdown
-    </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" th:href="@{/todos/todolist}">Todolist</a>
-        <a class="dropdown-item" th:href="@{/login}">Login</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-</li>
--->
 </body>
 </html>

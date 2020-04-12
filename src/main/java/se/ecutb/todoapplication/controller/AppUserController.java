@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import se.ecutb.todoapplication.data.AppUserRoleRepo;
 import se.ecutb.todoapplication.dto.AppUserFormDto;
 import se.ecutb.todoapplication.dto.UpdateAppUserFormDto;
@@ -72,12 +69,28 @@ public class AppUserController {
         }
     }
 
+    /*
     @GetMapping("users/{id}/delete")
     public String deleteUser(@PathVariable("id")int id){
         AppUser appUser = appUserService.findById(id).orElseThrow(IllegalArgumentException::new);
         appUserService.delete(appUser);
 
         return "user-list";
+    }
+
+     */
+
+    @PostMapping("users/delete")
+    public String deleteUser(@RequestParam("userId")int userId, @AuthenticationPrincipal UserDetails caller){
+        if (caller == null) return "redirect:/accessdenied";
+        if (caller.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ADMIN"))){
+            AppUser appUser = appUserService.findById(userId).orElseThrow(IllegalArgumentException::new);
+            appUserService.delete(appUser);
+            return "redirect:/users/userlist";
+        }else{
+            return "redirect:/accessdenied"; //Eller return delete failed? :)
+        }
+
     }
 
 
@@ -124,13 +137,6 @@ public class AppUserController {
         return "user-list";
 
     }
-/*
-    @PostMapping("users/{id}/adminprocess")
-    public String makeAdmin(){
-        return "redirect:/user-view";
-    }
-
- */
 
     @GetMapping("/login")
     public String getLoginForm(){

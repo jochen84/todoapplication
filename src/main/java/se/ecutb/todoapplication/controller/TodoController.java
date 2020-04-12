@@ -118,7 +118,6 @@ public class TodoController {
         System.err.println(form.getReward());
         System.err.println(form.getAssignee());
         System.err.println(form.isDone());
-
          */
 
         return "redirect:/todos/" + original.getTodoItemId();

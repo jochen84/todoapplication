@@ -44,3 +44,10 @@ När en task sätts till finished under update task, då får usern sin betalnin
 Samtidigt försvinner möjligheten att sätta tasken till not done.
 Påbörjat delete-funktion i user-list. Funkar inte. Än.
 *******
+
+****************************************
+---------------12/4---------------------
+I user view - checkbox done, där ska den va ibockad om admin har uppdaterat tasken till done. Ska usern få sätta done o få pengar
+Ska admin få sätta done där oxå?
+
+
